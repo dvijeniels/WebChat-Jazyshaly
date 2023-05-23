@@ -1,0 +1,76 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+<!DOCTYPE html>
+<html lang="ru" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'>
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/reset.css" />
+    <link rel="stylesheet" href="~/css/popup.css" />
+    <link href="~/css/logoutbutton.css" rel="stylesheet" />
+
+    
+
+</head>
+<body>
+    <header role="banner">
+
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <div id="cd-logo"><a href=""><img src="~/images/cd-logo.svg" /></a> <p>Добро пожаловать @User.Identity?.Name</p></div>
+            <nav class="main-nav">
+                
+                <ul>
+                    <li>
+                        <form class="form-inline" asp-controller="Home" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                            <button type="submit" id="logoutOn" class="btn-liquid"><span class="inner">Выйти</span></button>
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+        }
+        else
+        {
+            <div id="cd-logo"><a href=""><img src="~/images/cd-logo.svg" /></a></div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a class="cd-signin">Вход</a></li>
+                    <li><a class="cd-signup">Регистрация</a></li>
+                </ul>
+            </nav>
+        }
+    </header>
+    <div class="container clearfix">
+        @await Component.InvokeAsync("UserOnline")
+        @RenderBody()
+    </div>
+    <partial name="_Login" />
+    @*SignaR bağlantısı*@
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/js/chat.js"></script>
+    <script src="~/js/usersonline.js"></script>
+    @*SignaR bağlantısı*@
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/main.js"></script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.0/handlebars.min.js'></script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js'></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/logoutbutton.js"></script>
+
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

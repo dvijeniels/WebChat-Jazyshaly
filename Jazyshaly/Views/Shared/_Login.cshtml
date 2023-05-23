@@ -1,0 +1,108 @@
+﻿<div class="cd-user-modal">
+    <div class="cd-user-modal-container">
+        <ul class="cd-switcher">
+            <li><a href="">Вход</a></li>
+            <li><a href="">Регистрация</a></li>
+        </ul>
+        <div id="cd-login">
+
+            <form id="loginForm" class="cd-form" asp-controller="Home" asp-action="Login" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @*<p class="fieldset">
+                <label class="image-replace cd-email" for="signin-email">E-mail</label>
+                <input class="full-width has-padding has-border" id="signin-email" type="email" placeholder="E-mail">
+                <span class="cd-error-message">Здесь сообщение об ошибке!</span>
+                </p>*@
+                <p class="fieldset">
+                    <label class="image-replace cd-username" for="signup-username">Имя пользователя</label>
+                    <input class="full-width has-padding has-border" id="signup-username" name="UserName" placeholder="Имя пользователя" aria-required="true" />
+                    <span class="cd-error-message">Здесь сообщение об ошибке!</span>
+                </p>
+                <p class="fieldset">
+                    <label class="image-replace cd-password" for="signin-password">Пароль</label>
+                    <input class="full-width has-padding has-border" name="Password" id="signin-password" placeholder="Пароль" required />
+                    <a href="#" class="hide-password">Скрыть</a>
+                    <span class="cd-error-message">Здесь сообщение об ошибке!</span>
+                </p>
+                <p class="fieldset">
+                    <INPUT id=remember-me name=RememberMe value=true type=checkbox data-val-required="The Remember me field is required." data-val="true"><INPUT name=RememberMe value=false type=hidden>
+                    <label for="remember-me">Запомнить меня</label>
+                </p>
+                <p class="fieldset">
+                    <input class="full-width" type="submit" value="Войти" />
+                </p>
+            </form>
+            <p class="cd-form-bottom-message"><a href="">Забыли свой пароль?</a></p>
+        </div>
+        <div id="cd-signup">
+            <form id="registerForm" class="cd-form" asp-controller="Home" asp-action="Register" method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <p class="fieldset">
+                    <label class="image-replace cd-username" for="signup-username">Имя пользователя</label>
+                    <input class="full-width has-padding has-border" name="UserName" id="signup-username" type="text" placeholder="Имя пользователя" />
+                    <span class="cd-error-message">Здесь сообщение об ошибке!</span>
+                </p>
+                <p class="fieldset">
+                    <label class="image-replace cd-password" for="signup-password">Пароль</label>
+                    <input class="full-width has-padding has-border" autocomplete="off" name="Password" id="signup-password" type="text" placeholder="Пароль" />
+                    <a href="#" class="hide-password">Скрыть</a>
+                    <span class="cd-error-message">Здесь сообщение об ошибке!</span>
+                </p>
+                <p class="fieldset">
+                    <label class="image-replace cd-password" for="signup-password">Пароль</label>
+                    <input class="full-width has-padding has-border" autocomplete="off" name="ConfirmPassword" id="signup-password" type="text" placeholder="Повторите пароль" />
+                    <a href="#" class="hide-password">Скрыть</a>
+                    <span class="cd-error-message">Здесь сообщение об ошибке!</span>
+                </p>
+                <p class="fieldset">
+                    <input type="checkbox" id="accept-terms" />
+                    <label for="accept-terms">Я согласен с <a href="">Условиями</a></label>
+                </p>
+                <p class="fieldset">
+                    <input class="full-width has-padding" type="submit" value="Создать аккаунт" />
+                </p>
+            </form>
+        </div>
+        <div id="cd-reset-password">
+            <p class="cd-form-message">Забыли пароль? Пожалуйста, введите адрес своей электронной почты. Вы получите ссылку, чтобы создать новый пароль.</p>
+            <form id="forgotForm" class="cd-form" asp-controller="Home" asp-action="Forgot">
+                <p class="fieldset">
+                    <label class="image-replace cd-email" for="reset-email">E-mail</label>
+                    <input class="full-width has-padding has-border" id="reset-email" type="email" placeholder="E-mail" />
+                    <span class="cd-error-message">Здесь сообщение об ошибке!</span>
+                </p>
+                <p class="fieldset">
+                    <input class="full-width has-padding" type="submit" value="Восстановить пароль" />
+                </p>
+            </form>
+            <p class="cd-form-bottom-message"><a href="">Вернуться к входу</a></p>
+        </div>
+        <a href="" class="cd-close-form">Закрыть</a>
+    </div>
+</div>
+
+@*Фильтрация по дате модальное окно*@
+<div class="cd-user-modal-date-filter">
+    <div class="cd-user-modal-container">
+        <form id="dateForm" class="cd-form" asp-controller="Home" asp-action="Index" method="post">
+            <h2>Фильтрация по дате</h2>
+            <div asp-validation-summary="ModelOnly"></div>
+            <p class="fieldset">
+                <label>От</label>
+                <label class="image-replace cd-date" for="signup-username">От</label>
+                <input class="full-width has-padding has-border" name="startDate" type="datetime-local"/>
+                <span class="cd-error-message">Здесь сообщение об ошибке!</span>
+            </p>
+            <p class="fieldset">
+                <label>До</label>
+                <label class="image-replace cd-date" for="signup-username">До</label>
+                <input class="full-width has-padding has-border" name="endDate" type="datetime-local" />
+                <span class="cd-error-message">Здесь сообщение об ошибке!</span>
+            </p>
+            <p class="fieldset">
+                <input class="full-width" type="submit" value="Показать" />
+            </p>
+        </form>
+    </div>
+    <a href="" class="cd-close-form">Закрыть</a>
+</div>

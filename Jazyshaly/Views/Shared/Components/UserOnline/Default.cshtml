@@ -1,0 +1,24 @@
+﻿
+<div class="people-list" id="people-list">
+	<div class="search">
+		<input type="text" placeholder="Поиск" />
+		<i class="fa fa-search"></i>
+	</div>
+	<span class="search" id="usersOnline">Total online: 0</span>
+	<ul class="list">
+		
+		@foreach (var user in Model)
+		{
+			<li class="clearfix">
+				<img src="~/images/avatar.png" alt="avatar" />
+				<div class="about">
+					<div class="name">@user.UserName</div>
+					<div class="status" id="txt_@user.UserName">
+						<i class="fa fa-circle offline"></i> не в сети
+					</div>
+				</div>
+			</li>
+		}
+	</ul>
+	
+</div>

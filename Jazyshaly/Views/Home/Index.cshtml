@@ -1,0 +1,138 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<Jazyshaly.Models.Message>
+@inject SignInManager<User> SignInManager
+@{
+    ViewData["Title"] = "Home Page";
+}
+@{
+    var currentName = User.Identity.Name;
+}
+<div class="chat">
+    <div class="chat-header clearfix">
+        <img src="~/images/obsh-chat.png" alt="avatar" />
+
+        <div class="chat-about">
+            <div class="chat-with">Келгиле жазышалы</div>
+            <div class="chat-num-messages">всего @ViewBag.ToplamMessage сообщений</div>
+        </div>
+        <i id="updateDate" class="fa fa-refresh"></i>
+    </div>
+    <div class="chat-history">
+        <ul>
+            @if (Model != null)
+            {
+                @foreach (var message in Model.OrderBy(x => x.When))
+                {
+                    if (currentName == message.SenderName)
+                    {
+                        <li class="clearfix">
+                            <div class="message-data align-right">
+                                @if (message.When.Date == DateTime.Today)
+                                {
+                                    <span class="message-data-time"> @message.When, Сегодня</span>
+                                }
+                                else {
+                                    <span class="message-data-time"> @message.When</span> 
+                                } &nbsp; &nbsp;
+                        <span class="message-data-name">@currentName</span> <i class="fa fa-circle me"></i>
+                            </div>
+                            <div class="message other-message float-right">
+                                @message.Content
+                            </div>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <div class="message-data">
+                                <span class="message-data-name"><i class="fa fa-circle online"></i>@message.SenderName</span>
+                                @if (message.When.Date == DateTime.Today)
+                                {
+                                    <span class="message-data-time"> @message.When, Сегодня</span>
+                                }
+                                else
+                                {
+                                    <span class="message-data-time"> @message.When</span>
+                                }
+                            </div>
+                            <div class="message my-message">
+                                @message.Content
+                            </div>
+                        </li>
+                    }
+                }
+            }
+
+
+
+            @*            <li>
+            <div class="message-data">
+            <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
+            <span class="message-data-time">10:31 AM, Today</span>
+            </div>
+            <i class="fa fa-circle online"></i>
+            <i class="fa fa-circle online" style="color: #AED2A6"></i>
+            <i class="fa fa-circle online" style="color:#DAE9DA"></i>
+            </li>*@
+
+        </ul>
+
+    </div>
+    <div class="chat-message clearfix">
+        <form id="messageForm" asp-controller="Home" asp-action="CreateMessage" method="post">
+            <div class="col-5" hidden><input type="text" id="userInput" name="SenderName" value="@currentName" /></div>
+            <textarea id="messageInput" name="Content" placeholder="Введите текст" rows="3"></textarea>
+            <button type="submit" id="sendButton">Отправить</button>
+        </form>
+        <div class="onclick-date-filter">
+            <button type="button" class="btn btn-primary">
+                Фильтрция
+            </button>
+        </div>
+    </div>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <script>
+            document.getElementById("messageInput").readOnly = false;
+            document.getElementById("sendButton").style.display = "block";
+        </script>
+    }
+    else
+    {
+        <script>
+            document.getElementById("messageInput").readOnly = true;
+            document.getElementById("messageInput").placeholder = "Выполните вход чтобы общаться";
+            document.getElementById("sendButton").style.display = "none";
+        </script>
+    }
+
+</div>
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        const chatHistory = document.querySelector('.chat-history');
+        chatHistory.scrollTop = chatHistory.scrollHeight;
+    });
+</script>
+
+<script id="message-template" type="text/x-handlebars-template">
+    <li class="clearfix">
+      <div class="message-data align-right">
+        <span class="message-data-time" >{{time}}, Сегодня</span> &nbsp; &nbsp;
+        <span class="message-data-name" >{{meName}}</span> <i class="fa fa-circle me"></i>
+      </div>
+      <div class="message other-message float-right">
+        {{messageOutput}}
+      </div>
+    </li>
+</script>
+<script id="message-response-template" type="text/x-handlebars-template">
+    <li>
+      <div class="message-data">
+        <span class="message-data-name"><i class="fa fa-circle online"></i> {{meName}}</span>
+        <span class="message-data-time">{{time}}, Сегодня</span>
+      </div>
+      <div class="message my-message">
+        {{messageOutput}}
+      </div>
+    </li>
+</script>
